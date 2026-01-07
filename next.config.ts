@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
       },
+      {
+        protocol: 'https',
+        hostname: "images.unsplash.com",
+      },
     ],
   },
   // Note: webpack config removed for Turbopack compatibility

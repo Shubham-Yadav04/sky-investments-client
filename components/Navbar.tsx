@@ -15,10 +15,12 @@ export default function Navbar() {
 
     useEffect(() => {
         const handleScroll = () => {
-            setScrolled(window.scrollY > 20);
+            setScrolled(window.scrollY >20);
         };
         window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        return () => {window.removeEventListener('scroll', handleScroll)
+            setScrolled(false)
+        };
     }, []);
 
     const navLinks = [
@@ -34,19 +36,19 @@ export default function Navbar() {
         <motion.nav
             initial={{ y: -100 }}
             animate={{ y: 0 }}
-            className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled
-                    ? 'bg-white/90 backdrop-blur-md shadow-sm py-4 border-b border-gray-200/50'
-                    : 'bg-transparent py-6 border-b border-transparent'
+            className={`sticky top-0  w-full z-50 transition-all duration-300 ${scrolled
+                    ? 'bg-white/50 backdrop-blur-md shadow-sm py-3 border-b border-gray-200/50'
+                    : 'bg-transparent py-5 border-b border-transparent'
                 }`}
         >
             <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
                 {/* Logo */}
-                <Link href="/" className="group relative z-50">
+                <Link href="/" className="group relative ">
                     <div className="flex items-center gap-2">
                         <div className="w-8 h-8 bg-gradient-to-br from-slate-900 to-slate-700 rounded-lg flex items-center justify-center text-white font-serif font-bold text-lg">
                             S
                         </div>
-                        <span className={`font-serif text-xl font-bold tracking-tight transition-colors ${scrolled ? 'text-slate-900' : 'text-slate-900'}`}>
+                        <span className={`font-serif text-xl  font-bold tracking-tight transition-colors ${scrolled ? 'text-slate-900' : 'text-neutral-400 '}`}>
                             Sky Investment
                         </span>
                     </div>
@@ -58,8 +60,8 @@ export default function Navbar() {
                         <Link
                             key={link.href}
                             href={link.href}
-                            className={`text-sm font-medium transition-colors relative group ${pathname === link.href ? 'text-blue-600' : 'text-slate-600 hover:text-slate-900'
-                                }`}
+                            className={`text-sm font-medium transition-colors relative group ${pathname === link.href ? 'text-blue-600' : 'text-slate-600 '
+                                } hover:text-indigo-600`}
                         >
                             {link.name}
                             {pathname === link.href && (
@@ -74,7 +76,7 @@ export default function Navbar() {
                     {session ? (
                         <button
                             onClick={() => signOut()}
-                            className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+                            className=" text-sm font-medium text-slate-600 hover:text-red-600 transition-colors"
                         >
                             Log out
                         </button>

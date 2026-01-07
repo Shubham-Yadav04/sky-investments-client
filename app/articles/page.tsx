@@ -44,7 +44,7 @@ export default async function ArticlesPage({
 
     return (
         <div className="min-h-screen bg-white">
-            <div className="bg-gray-50 py-20 border-b border-gray-100">
+            <div className="bg-gray-50 py-10 border-b border-gray-100">
                 <div className="max-w-4xl mx-auto px-6 text-center">
                     <h1 className="text-4xl md:text-5xl font-serif font-bold text-slate-900 mb-6 tracking-tight">
                         Investment Insights
@@ -55,7 +55,7 @@ export default async function ArticlesPage({
                 </div>
             </div>
 
-            <div className="max-w-3xl mx-auto px-6 py-16">
+            <div className="max-w-3xl mx-auto px-6 py-16 flex flex-col gap-6">
                 <ArticleSearch />
                 {articles.length > 0 ? (
                     articles.map((article: any) => (

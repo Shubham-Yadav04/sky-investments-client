@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function BlogPost({ params }: PageProps) {
     const { slug } = await params;
     const article: any = await getArticle(slug);
-
+console.log(article)
     if (!article) {
         notFound();
     }

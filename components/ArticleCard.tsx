@@ -10,7 +10,7 @@ interface ArticleCardProps {
 
 export default function ArticleCard({ title, excerpt, slug, publishedAt }: ArticleCardProps) {
     return (
-        <article className="group mb-12 border-b border-gray-100 pb-10 last:border-0">
+        <article className="group border-b-2  border-gray-100 pb-10  hover:bg-neutral-100/50 transition-colors rounded-lg px-4 py-6 shadow-md">
             <div className="mb-3 text-sm text-gray-500 font-medium">
                 {format(new Date(publishedAt), 'MMMM d, yyyy')}
             </div>
