@@ -9,8 +9,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Note: webpack config removed for Turbopack compatibility
-  // The dynamic import in the API route handles pdf-parse bundling
 };
 
 export default nextConfig;
