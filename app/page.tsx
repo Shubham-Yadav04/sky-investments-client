@@ -248,7 +248,7 @@ function BlogShowCase(){
           <h2 className="text-3xl font-extrabold text-slate-900">
             Blog & Insights
           </h2>
-          <p className="mt-3 max-w-2xl text-slate-600">
+          <p className="mt-3 w-full text-slate-600">
             Research-driven writing on markets, businesses, and the psychology
             behind capital and decision-making.
           </p>

@@ -5,20 +5,15 @@ import Article from '@/models/Article';
 import dbConnect from '@/lib/mongodb';
 import { format } from 'date-fns';
 import { Edit2, Trash2, Plus } from 'lucide-react';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
+
 import DeleteArticleButton from '@/components/DeleteArticleButton';
 import AdminSearch from '@/components/AdminSearch';
-
-export const revalidate = 60;
-
 const PAGE_SIZE = 10;
 
 async function getArticles(query: string = '', page: number = 1) {
     try {
-        const isAdmin = true; // Since this is admin dashboard
+        // const isAdmin = true; // Since this is admin dashboard
         const getRes= await fetch(`http://localhost:3000/api/articles?admin=true&q=${encodeURIComponent(query)}&page=${page}`,{
-            cache:"force-cache"
     })
         const data= await getRes.json();
         return data;
@@ -46,14 +41,16 @@ export default async function AdminDashboard({
     const publishedCount = allArticles.filter((a: any) => a.isPublished).length;
     const draftCount = totalArticles - publishedCount;
     const trendingCount = allArticles.filter((a: any) => a.isTrending).length;
-
+function util(){
+    articles.map((article: any)=>console.log(article.isPublished))
+}
     const buildPageHref = (page: number) => {
         const qs = new URLSearchParams();
         if (query) qs.set('q', query);
         qs.set('page', String(page));
         return `/admin${qs.toString() ? `?${qs.toString()}` : ''}`;
     };
-
+    util();
     return (
         <div className="space-y-8">
             {/* Action Buttons */}

@@ -3,7 +3,7 @@ import dbConnect from '@/lib/mongodb';
 import Article from '@/models/Article';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
-import { redis } from '@/uitls/redisConncection';
+import { redis } from '@/utils/redisConncection';
 export async function GET(
     request: Request,
     { params }: { params: Promise<{ slug: string }> } 
