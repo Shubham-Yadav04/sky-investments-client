@@ -81,121 +81,207 @@ export default function ArticleForm({ initialData }: ArticleFormProps) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6 max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                        <input
-                            type="text"
-                            name="title"
-                            value={formData.title}
-                            onChange={handleChange}
-                            onBlur={!initialData ? generateSlug : undefined} // Auto-generate slug on blur for new articles
-                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-gray-400"
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Slug</label>
-                        <input
-                            type="text"
-                            name="slug"
-                            value={formData.slug}
-                            onChange={handleChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-gray-400 bg-gray-50 text-gray-500"
-                            required
-                            disabled={!!initialData} // Disable slug editing for existing articles to prevent URL breakages easily, or allow? I'll disable for safety.
-                        />
-                    </div>
-                </div>
-                <div className="space-y-4">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                        <select
-                            name="category"
-                            value={formData.category}
-                            onChange={handleChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-gray-400 bg-white"
-                            required
-                        >
-                            {categoryOptions.map((category) => (
-                                <option key={category} value={category}>
-                                    {category}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Cover Image URL</label>
-                        <input
-                            type="text"
-                            name="coverImage"
-                            value={formData.coverImage}
-                            onChange={handleChange}
-                            placeholder="https://..."
-                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-gray-400"
-                        />
-                    </div>
-                    <div className="flex items-center gap-6 pt-2">
-                        <div className="flex items-center gap-2">
-                            <input
-                                type="checkbox"
-                                id="isTrending"
-                                name="isTrending"
-                                checked={formData.isTrending}
-                                onChange={(e) => setFormData(prev => ({ ...prev, isTrending: e.target.checked }))}
-                                className="h-4 w-4 text-gray-900 border-gray-300 rounded focus:ring-gray-900"
-                            />
-                            <label htmlFor="isTrending" className="text-sm font-medium text-gray-700 select-none">
-                                Trending
-                            </label>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <input
-                                type="checkbox"
-                                id="isPublished"
-                                name="isPublished"
-                                checked={formData.isPublished}
-                                onChange={(e) => setFormData(prev => ({ ...prev, isPublished: e.target.checked }))}
-                                className="h-4 w-4 text-gray-900 border-gray-300 rounded focus:ring-gray-900"
-                            />
-                            <label htmlFor="isPublished" className="text-sm font-medium text-gray-700 select-none">
-                                Publish immediately?
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
+       <form onSubmit={handleSubmit} className="space-y-6 max-w-4xl mx-auto font-sans">
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="space-y-4">
+      <div>
+        <label
+          htmlFor="title"
+          className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 tracking-wide"
+        >
+          Title
+        </label>
+        <input
+          id="title"
+          type="text"
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
+          onBlur={!initialData ? generateSlug : undefined}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded
+                     bg-white dark:bg-black text-gray-900 dark:text-gray-100
+                     placeholder-gray-400 dark:placeholder-gray-500
+                     focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 dark:focus:ring-gray-400
+                     font-medium tracking-wide"
+          required
+          placeholder="Enter the article title"
+        />
+      </div>
 
-            <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Excerpt (Short description)</label>
-                <textarea
-                    name="excerpt"
-                    value={formData.excerpt}
-                    onChange={handleChange}
-                    rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-gray-400"
-                    required
-                />
-            </div>
+      <div>
+        <label
+          htmlFor="slug"
+          className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 tracking-wide"
+        >
+          Slug
+        </label>
+        <input
+          id="slug"
+          type="text"
+          name="slug"
+          value={formData.slug}
+          onChange={handleChange}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded
+                     bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-400
+                     placeholder-gray-500 dark:placeholder-gray-600
+                     font-medium tracking-wide"
+          required
+          disabled={!!initialData}
+          placeholder="auto-generated-slug"
+        />
+      </div>
+    </div>
 
-            <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Content</label>
-                <div className="min-h-[400px]">
-                    <Editor value={formData.content} onChange={(html) => setFormData(prev => ({ ...prev, content: html }))} />
-                </div>
-            </div>
+    <div className="space-y-4">
+      <div>
+        <label
+          htmlFor="category"
+          className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 tracking-wide"
+        >
+          Category
+        </label>
+        <select
+          id="category"
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded
+                     bg-white dark:bg-black text-gray-900 dark:text-gray-100
+                     focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 dark:focus:ring-gray-400
+                     font-medium tracking-wide"
+          required
+        >
+          {categoryOptions.map((category) => (
+            <option
+              key={category}
+              value={category}
+              className="bg-white dark:bg-black text-gray-900 dark:text-gray-100 font-normal"
+            >
+              {category}
+            </option>
+          ))}
+        </select>
+      </div>
 
-            <div className="flex justify-end pt-4">
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="bg-gray-900 text-white px-6 py-2 rounded hover:bg-gray-800 transition-colors font-medium disabled:opacity-50"
-                >
-                    {loading ? 'Saving...' : initialData ? 'Update Article' : 'Create Article'}
-                </button>
-            </div>
-        </form>
+      <div>
+        <label
+          htmlFor="coverImage"
+          className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 tracking-wide"
+        >
+          Cover Image URL
+        </label>
+        <input
+          id="coverImage"
+          type="text"
+          name="coverImage"
+          value={formData.coverImage}
+          onChange={handleChange}
+          placeholder="https://example.com/image.jpg"
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded
+                     bg-white dark:bg-black text-gray-900 dark:text-gray-100
+                     placeholder-gray-400 dark:placeholder-gray-500
+                     focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 dark:focus:ring-gray-400
+                     font-medium tracking-wide"
+        />
+      </div>
+
+      <div className="flex items-center gap-6 pt-2">
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            id="isTrending"
+            name="isTrending"
+            checked={formData.isTrending}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, isTrending: e.target.checked }))
+            }
+            className="h-4 w-4 text-gray-900 dark:text-gray-200 border-gray-300 dark:border-gray-600 rounded
+                       focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 dark:focus:ring-gray-400 bg-white dark:bg-black"
+          />
+          <label
+            htmlFor="isTrending"
+            className="text-sm font-semibold text-gray-700 dark:text-gray-300 select-none tracking-wide"
+          >
+            Trending
+          </label>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            id="isPublished"
+            name="isPublished"
+            checked={formData.isPublished}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, isPublished: e.target.checked }))
+            }
+            className="h-4 w-4 text-gray-900 dark:text-gray-200 border-gray-300 dark:border-gray-600 rounded
+                       focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 dark:focus:ring-gray-400 bg-white dark:bg-black"
+          />
+          <label
+            htmlFor="isPublished"
+            className="text-sm font-semibold text-gray-700 dark:text-gray-300 select-none tracking-wide"
+          >
+            Publish immediately?
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label
+      htmlFor="excerpt"
+      className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 tracking-wide"
+    >
+      Excerpt (Short description)
+    </label>
+    <textarea
+      id="excerpt"
+      name="excerpt"
+      value={formData.excerpt}
+      onChange={handleChange}
+      rows={3}
+      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded
+                 bg-white dark:bg-black text-gray-900 dark:text-gray-100
+                 placeholder-gray-400 dark:placeholder-gray-500
+                 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 dark:focus:ring-gray-400
+                 font-medium tracking-wide"
+      required
+      placeholder="Write a short summary..."
+    />
+  </div>
+
+  <div>
+    <label
+      htmlFor="content"
+      className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 tracking-wide"
+    >
+      Content
+    </label>
+    <div
+      id="content"
+      className="min-h-[400px] rounded border border-gray-300 dark:border-gray-600
+                 bg-white dark:bg-black text-gray-900 dark:text-gray-100"
+    >
+      <Editor
+        value={formData.content}
+        onChange={(html) => setFormData((prev) => ({ ...prev, content: html }))}
+      />
+    </div>
+  </div>
+
+  <div className="flex justify-end pt-4">
+    <button
+      type="submit"
+      disabled={loading}
+      className="bg-gray-900 dark:bg- text-white px-6 py-2 rounded hover:bg-gray-800 transition-colors font-semibold tracking-wide disabled:opacity-50"
+    >
+      {loading ? 'Saving...' : initialData ? 'Update Article' : 'Create Article'}
+    </button>
+  </div>
+</form>
+
+
     );
 }

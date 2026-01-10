@@ -6,6 +6,8 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { Menu, X, ArrowRight } from 'lucide-react';
+import { ThemeToggle } from './ThemeToggle';
+import Image from 'next/image';
 
 export default function Navbar() {
     const { data: session } = useSession();
@@ -28,14 +30,14 @@ useEffect(() => {
   return () => window.removeEventListener("scroll", handleScroll);
 }, []);
 
-    const navLinks = [
+    let navLinks = [
         { name: 'Home', href: '/' },
          { name: 'About', href: '#about' },
-          { name: 'Contact Us', href: '#contact' },
         { name: 'Articles', href: '/articles' },
     ];
 
     if (session) {
+        navLinks= navLinks.filter(link=> link.name!=="About")
         navLinks.push({ name: 'Dashboard', href: '/admin' });
     }
 
@@ -44,18 +46,18 @@ useEffect(() => {
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             className={`sticky top-0  w-full z-50 py-3  transition-all duration-300 ${scrolled
-                    ? 'bg-white/50 px-12 backdrop-blur-md shadow-sm border-b border-gray-200/50'
-                    : 'bg-transparent  border-b border-transparent'
+                    ? 'bg-white/50 dark:bg-black/50  md:px-12 backdrop-blur-md shadow-sm border-b border-gray-200/50'
+                    : 'bg-transparent border-b border-transparent'
                 }`}
         >
             <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="group relative ">
                     <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-gradient-to-br from-slate-900 to-slate-700 rounded-lg flex items-center justify-center text-white font-serif font-bold text-lg">
-                            S
+                        <div className=" rounded-lg flex items-center justify-center text-white font-serif font-bold text-lg">
+                           <Image src="/favicon/favicon-96x96.png" height={25} width={25} alt='logo'/>
                         </div>
-                        <span className={`font-serif text-xl  font-bold tracking-tight transition-colors ${scrolled ? 'text-slate-900' : 'text-neutral-400 '}`}>
+                        <span className={`font-serif text-xl hidden dark:text-neutral-200 md:flex font-bold tracking-tight transition-colors ${scrolled ? 'text-slate-900' : 'text-neutral-400 '}`}>
                             Sky Investment
                         </span>
                     </div>
@@ -97,7 +99,8 @@ useEffect(() => {
                     // )
                     }
                 </div>
-
+                <div className='flex gap-2'>
+<ThemeToggle/>
                 {/* Mobile Toggle */}
                 <button
                     className="md:hidden relative z-50 p-2 text-slate-800"
@@ -105,6 +108,7 @@ useEffect(() => {
                 >
                     {mobileMenuOpen ? <X /> : <Menu />}
                 </button>
+            </div>
             </div>
 
             {/* Mobile Menu */}
